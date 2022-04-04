@@ -1,17 +1,23 @@
 <?php
          include("../connexion.php");
-             $id = $_GET['edit'];
-            $nometu = '';
-          /*   $prenom= '';
-             $genre= '';
-             $datenaiss= '';
-             $emailetu= '';
-             $teletu= '';
-             $fil= '';
-             $statut= ''; */
-             if(isset($_POST["modifier"]))
+         $id = $_GET['edit'];
+         $request = "SELECT * FROM student WHERE idEtudiant=$id";
+         $res = mysqli_query($link, $request);
+          while($row=mysqli_fetch_assoc($res)){
+               $nom = $row['nomEtudiant'];
+               $preno = $row['prenomEtudiant'];
+               $gen = $row['genreEtudiant'];
+               $datenais = $row['datenais'];
+               $email = $row['emailEtudiant'];
+               $tel = $row['numeroEtudiant'];
+               $fili = $row['filEtudiant'];
+               $statu = $row['studentStatus'];
+          }
+
+                if(isset($_POST["modifier"]))
                      
                                 {
+                                   
                                     $nometu = $_POST["nomEtudiant"];
                                     $prenom = $_POST["prenomEtudiant"];
                                     $genre = $_POST["genreEtudiant"];
@@ -43,18 +49,19 @@
 
                                             move_uploaded_file($tmpName, '../image/' . $newImageName);
                                             
-                                            $query = "UPDATE student SET  
-                                                    nomEtudiant= '$nometu', 
-                                                    prenomEtudiant='$prenom',
-                                                    genreEtudiant='$genre',
-                                                    datenais = '$datenaiss',
-                                                    emailEtudiant = '$emailetu',
-                                                    numeroEtudiant = '$teletu',
+                                            
+                                            $query = "UPDATE student SET idEtudiant=$id , 
+                                                    nomEtudiant= '$nometu' , 
+                                                    prenomEtudiant='$prenom' ,
+                                                    genreEtudiant='$genre' ,
+                                                    datenais = '$datenaiss' ,
+                                                    emailEtudiant = '$emailetu' ,
+                                                    numeroEtudiant = '$teletu' ,
                                                     studentStatus = '$statut' WHERE idEtudaint=$id;";
                                             $reslt = mysqli_query($link, $query);
                                                if($reslt){
                                                    echo " <script> alert('Modification effectué') </script>";
-                                                   header("location: ../Formulaires/ajoutetu.php");
+                                                   header("Location: ../html/universite/etudiant/etudiant.php");
                                                } else {
                                                    die(mysqli_error($link));
                                                }
@@ -129,43 +136,42 @@
                                             <div class="group">
                                                 <div class="field">
                                                     <label>Nom</label>
-                                                    <input type="text" name="nomEtudiant" value="<?php 
-                                                    echo $nometu;?>">
+                                                    <input type="text" name="nomEtudiant" value=<?php echo $nom;?>>
                                                     <i class="icon-user"></i>
                                                 </div>
                                                 <div class="field">
                                                     <label>Prénom</label>
-                                                    <input type="text" name="prenomEtudiant" value="">
+                                                    <input type="text" name="prenomEtudiant" value="<?php echo $preno;?>">
                                                     <i class="icon-user"></i>
                                                 </div>
                                                 <div class="field">
                                                     <label>Genre</label>
-                                                    <input type="text" name="genreEtudiant" value="">
+                                                    <input type="text" name="genreEtudiant" value="<?php echo $gen;?>">
                                                     <i class="icon-user"></i>
                                                 </div>
                                             </div>
                                             <div class="group">
                                                 <div class="field">
                                                     <label>Date de naissance</label>
-                                                    <input type="date" name="datenais" placeholder="DD/MM/YYYY" value="<?php echo $datenaiss;?>">
+                                                    <input type="date" name="datenais" placeholder="DD/MM/YYYY" value="<?php echo $datenais;?>">
                                                     <i class="icon-calendar"></i>
                                                 </div>
                                             </div>
                                             <div class="group">
                                                 <div class="field">
                                                     <label>Email</label>
-                                                    <input type="email" name="emailEtudiant" value="<?php echo $emailetu;?>">
+                                                    <input type="email" name="emailEtudiant" value="<?php echo $email;?>">
                                                     <i class="icon-mail"></i>
                                                 </div>
                                                 <div class="field">
                                                     <label>Téléphone</label>
-                                                    <input type="tel" name="numeroEtudiant" value="<?php echo $teletu;?>">
+                                                    <input type="tel" name="numeroEtudiant" value="<?php echo $tel;?>">
                                                     <i class="icon-phone"></i>
                                                 </div>
                                                 <div class="field">
                                                     <label>Status</label>
-                                                    <select name="studentStatus" class="span5" value="<?php echo $statut;?>">
-                                                        <option></option>
+                                                    <select name="studentStatus" class="span5" value="<?php echo $statu;?>">
+                                                        <option><?php echo $statu;?></option>
                                                         <option>ACTIF</option>
                                                         <option>NON ACTIF</option>
                                                     </select>
@@ -175,8 +181,8 @@
                                             <div class="group">
                                                 <div class="field">
                                                     <label>Filière</label>
-                                                    <select name="filEtudiant" class="span5" value="<?php echo $fil;?>">
-											<option>                   </option>
+                                                    <select name="filEtudiant" class="span5" value="<?php echo $fili;?>">
+											     <option>  <?php echo $fili;?>  </option>
                                                         <?php 
                                                         $sql = "SELECT * FROM school_filiere";
                                                         $result = mysqli_query($link, $sql);
@@ -193,7 +199,7 @@
                                     </div>
                                     <div class="form_footer" align="center">
                                         <div class="group">
-                                            <button type="submit" id="val" name="modifier">Modifier</button>
+                                            <button type="submit" name="modifier">Modifier</button>
                                             <button>Annuler</button>
                                         </div>
                                     </div>

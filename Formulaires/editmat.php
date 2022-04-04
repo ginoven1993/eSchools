@@ -1,24 +1,38 @@
 <?php
-    include("../connexion.php");
+         include("../connexion.php");
+         $id = $_GET['edit'];
+         $request = "SELECT * FROM school_matiere WHERE idmatiere = $id;";
+         $res = mysqli_query($link, $request);
+          while($row=mysqli_fetch_assoc($res)){
+               $nommat = $row['nomMatiere'];
+               $filmat = $row['filiereMatiere'];
+               $credit = $row['nbrecreditMatiere'];              
+          }
 
-    if(isset($_POST["valider"])){
-        $nom = $_POST["nomMatiere"];
-        $fil = $_POST["filiereMatiere"];
-        $nbre = $_POST["nbrecreditMatiere"];
-
-        $query = "INSERT INTO school_matiere VALUES('', '$nom', '$fil', '$nbre', '', '', '');";
-          mysqli_query($link, $query);
-
-        echo '
-         <script> 
-           swal({
-            title: "Matiere créé!",
-            text: "Felicitations!",
-            icon: "success",
-          }); 
-         </script>';
-       header("Location: ../html/universite/filiere/matiere.php");
-    }
+                if(isset($_POST["modifier"]))
+                     
+                                {
+                                   
+                                $nom = $_POST['nomMatiere'];
+                                 $fil = $_POST['filiereMatiere'];
+                                 $nbre = $_POST['nbrecreditMatiere'];
+                                
+                                            
+                             $query = "UPDATE school_matiere SET idmatiere=$id , 
+                                                    nomMatiere= '$nom' , 
+                                                    filiereMatiere='$fil' ,
+                                                    nbrecreditMatiere='$nbre' 
+                                                     WHERE idmatiere=$id;";
+                                            $reslt = mysqli_query($link, $query);
+                                               if($reslt){
+                                                   echo " <script> alert('Modification effectué') </script>";
+                                                   header("Location: ../html/universite/filiere/matiere.php");
+                                               } else {
+                                                   die(mysqli_error($link));
+                                               }
+                                               
+                                        }                                   
+         
 ?>
 <!DOCTYPE html>
 <html lang="fr-TG">
@@ -68,13 +82,13 @@
                                             <div class="group">
                                                 <div class="field">
                                                     <label>Nom</label>
-                                                    <input type="text" name="nomMatiere">
+                                                    <input type="text" name="nomMatiere" value=<?php echo $nommat;?>>
                                                     <i class="icon-thingName"></i>
                                                 </div>
                                                 <div class="field">
                                                     <label>Filière associée</label>
-                                                    <select name="filiereMatiere" class="span5">
-											        <option>  </option>
+                                                    <select name="filiereMatiere" class="span5" value=<?php echo $filmat;?>>
+											        <option> <?php echo $filmat;?> </option>
                                                         <?php 
                                                         $sql = "SELECT * FROM school_filiere";
                                                         $result = mysqli_query($link, $sql);
@@ -90,7 +104,7 @@
                                             <div class="group">
                                                 <div class="field">
                                                     <label>Nombre de crédits</label>
-                                                    <input type="number" name="nbrecreditMatiere">
+                                                    <input type="number" name="nbrecreditMatiere" value=<?php echo $credit;?>>
                                                     <i class="icon-capacity"></i>
                                                 </div>
                                             </div>
@@ -98,7 +112,7 @@
                                     </div>
                                     <div class="form_footer" align="center">
                                         <div class="group">
-                                            <button type="submit" name="valider">Valider</button>
+                                            <button type="submit" name="modifier">Valider</button>
                                             <button>Annuler</button>
                                         </div>
                                     </div>

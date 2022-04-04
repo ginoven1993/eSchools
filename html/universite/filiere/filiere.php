@@ -92,9 +92,9 @@
                                             <td><?php echo $row['nombre_matieres'];?></td>
                                             <td><?php echo $row['salle_de_cours'];?></td> 
                                             <td>
-                                            <a  class="btn btn-success icon" href="../../../Formulaires\infofil.php"><ion-icon name="eye-outline"></ion-icon></a>
-                                            <a  class="btn btn-warning icon" href="../../../Formulaires\ajoutfil.php"><ion-icon name="create-outline"></ion-icon></a>
-                                            <button  class="btn btn-danger icon"><ion-icon name="trash-outline"></ion-icon></button>
+                                            <a  class="btn btn-success icon" href="../../../Formulaires\editfil.php?edit=<?php echo $row['idfiliere'];?>"><ion-icon name="eye-outline"></ion-icon></a>
+                                            <a  class="btn btn-danger icon" href="../../../Formulaires\deletefil.php?delete=<?php echo $row['idfiliere'];?>"><ion-icon name="trash-outline"></ion-icon></a>
+                                            
                                             </td>        
                                     <?php  
                                        }
