@@ -1,3 +1,8 @@
+<?php
+    include("../../../connexion.php");
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +14,14 @@
     <link rel="stylesheet" href="../../../css/style/stylehtml.css">
 </head>
 <body>
+<?php  
+      if (isset($_SESSION['message'])) {?>
+          <div class="alert alert-<?=$_SESSION['msg_type']?>">
+               <?php  echo $_SESSION['message'];
+               unset($_SESSION['message']);
+               ?>
+        </div>
+        <?php } ?>
     <div class="conteneur">
         <div class="verticale">
             <div class="admin">
@@ -24,7 +37,8 @@
                 <a class="a" href="..\compta\compta.php"><li>Tableau de bord</li></a>
                 <a class="a" href="..\etudiant\etudiant.php"><li>Etudiants</li></a>
                 <a class="a" href="..\filiere\filiere.php"><li>Filières</li></a>
-                <a class="a" id="prime" href="#"><li>Personnel</li></a>
+                <a class="a" href="..\personnel\personnel.php"><li>Personnels</li></a>
+                <!-- <a class="a" id="prime" href="#"><li>Personnel</li></a> -->
             </ul>
         </div>
         <div class="horizontale">
@@ -39,10 +53,19 @@
                             <div class="recherch">
                                 <input type="text" name="recherce" id="recherche"placeholder="recherche">
                             </div>
-                            <a class="ajout btn btn-primary" href="../../../Formulaires\enreiProf.html">+ajouter du professeur</a>
+                            <a class="ajout btn btn-primary" href="../../../Formulaires\enreiProf.html">+ajouter professeur</a>
                         </div>
                     <div class="bat">
                         <div class="info">
+                        <div class="card infoprof" style="width:220px;margin:10px;">
+                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
+                            <div class="card-body">
+                              <h4 class="card-title">John Doe</h4>
+                              <p class="card-text">matière</p>
+                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
+                            </div>
+                          </div>
+
                           <div class="card infoprof" style="width:220px;margin:10px;">
                             <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
                             <div class="card-body">
@@ -51,70 +74,7 @@
                               <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
                             </div>
                           </div>
-                          <div class="card infoprof" style="width:220px;margin:10px;">
-                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
-                            <div class="card-body">
-                              <h4 class="card-title">John Doe</h4>
-                              <p class="card-text">matière</p>
-                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
-                            </div>
-                          </div>
-                          <div class="card infoprof" style="width:220px;margin:10px;">
-                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
-                            <div class="card-body">
-                              <h4 class="card-title">John Doe</h4>
-                              <p class="card-text">matière</p>
-                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
-                            </div>
-                          </div>
-                          <div class="card infoprof" style="width:220px;margin:10px;">
-                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
-                            <div class="card-body">
-                              <h4 class="card-title">John Doe</h4>
-                              <p class="card-text">matière</p>
-                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
-                            </div>
-                          </div>
-                          <div class="card infoprof" style="width:220px;margin:10px;">
-                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
-                            <div class="card-body">
-                              <h4 class="card-title">John Doe</h4>
-                              <p class="card-text">matière</p>
-                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
-                            </div>
-                          </div>
-                          <div class="card infoprof" style="width:220px;margin:10px;">
-                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
-                            <div class="card-body">
-                              <h4 class="card-title">John Doe</h4>
-                              <p class="card-text">matière</p>
-                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
-                            </div>
-                          </div>
-                          <div class="card infoprof" style="width:220px;margin:10px;">
-                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
-                            <div class="card-body">
-                              <h4 class="card-title">John Doe</h4>
-                              <p class="card-text">matière</p>
-                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
-                            </div>
-                          </div>
-                          <div class="card infoprof" style="width:220px;margin:10px;">
-                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
-                            <div class="card-body">
-                              <h4 class="card-title">John Doe</h4>
-                              <p class="card-text">matière</p>
-                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
-                            </div>
-                          </div>
-                          <div class="card infoprof" style="width:220px;margin:10px;">
-                            <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
-                            <div class="card-body">
-                              <h4 class="card-title">John Doe</h4>
-                              <p class="card-text">matière</p>
-                              <a href="../../../Formulaires\infoprof.html" class="btn btn-primary" style="width:50%;height:30%">Voir Profile</a>
-                            </div>
-                          </div>
+                          
                           <div class="card infoprof" style="width:220px;margin:10px;">
                             <img class="card-img-top" src="../../../image/fem.png" alt="Card image" style="width:100%;">
                             <div class="card-body">

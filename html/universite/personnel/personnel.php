@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php
+    include("../../../connexion.php");
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +10,17 @@
     <title>Personnel</title>
     <link href="../../../boost\css\bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../css/style/stylehtml.css">
+    <script src="../../../boost\js\sweetalert.min.js"></script>
 </head>
 <body>
+      <?php  
+      if (isset($_SESSION['message'])) {?>
+          <div class="alert alert-<?=$_SESSION['msg_type']?>">
+               <?php  echo $_SESSION['message'];
+               unset($_SESSION['message']);
+               ?>
+        </div>
+        <?php } ?>
     <div class="conteneur">
         <div class="verticale">
             <div class="admin">
@@ -18,76 +30,95 @@
                 <div class="identifiant">
                     <p>MAMADOU Aniss<br>administrateur</p>
                 </div>
-                <div><button class="deconnexion">Deconnecter</button></div>
+                <div><button class="deconnexion">Deconnecter</buttom></div>
             </div>
             <ul class="navigationVerticale">
                 <a class="a" href="..\compta\compta.php"><li>Tableau de bord</li></a>
-                <a class="a" href="..\etudiant\etudiant"><li>Etudiants</li></a>
-                <a class="a" href="..\filiere\filiere.php"><li>Filières</li></a>
-                <a class="a" id="prime" href="#"><li>Personnels</li></a>
+                <a class="a" id="prime" href="#"><li>Etudiants</li></a>
+                <a class="a" href="../filiere/filiere.php"><li>Filières</li></a>
+                <a class="a" href="../personnel/personnel.php"><li>Personnels</li></a>
             </ul>
         </div>
         <div class="horizontale">
                 <div class="navigationHaut">
                     <ul>
-                        <a class="a" id="primes" href="#"><li>Liste</li></a>
-                        <a class="a" href="enseigant.html"><li>Enseignants</li></a>
+                        <a class="a" id="primes"href="#"><li>Liste</li></a>
+                        <a class="a" href="note.php"><li>Notes</li></a>
+                        <a class="a" href="cour.php"><li>Cours</li></a>
                     </ul>
                 </div>
                 <div class="conteneurH">
                     <div class="haut">
-                            <div class="recherch">
-                                <div class="dropdown dropdown dropend" class="menu">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                                      Occupation
-                                    </button>
-                                    <ul class="dropdown-menu" id="men" >
-                                        <!--la liste des differents occupation-->
-                                      <li><a class="dropdown-item" href="#">occupation 1</a></li>
-                                      <li><a class="dropdown-item" href="#">occupation 2</a></li>
-                                      <li><a class="dropdown-item" href="#">occupation 3</a></li>
-                                    </ul>
-                                  </div>
-                                <input type="text" name="recherce" id="recherche"placeholder="recherche">
-                            </div>
-                            <div class="imprime">
-                                <button class="btn btn-secondary">Pdf</button>
-                                <button class="btn btn-secondary">Excel</button>
-                            </div>
-                            <a class="ajout btn btn-primary" href="../../../Formulaires\ajoutperso.php">+ajouter du personnel</a>
+                        <div class="recherch">
+                            <div class="dropdown dropdown dropend" class="menu">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                  Professeur
+                                </button>
+                                <ul class="dropdown-menu" id="men" >
+                                    <!--la liste des Personnels-->
+                                  <li><a class="dropdown-item" href="#">DG</a></li>
+                                  <li><a class="dropdown-item" href="#">DE</a></li>
+                                  <li><a class="dropdown-item" href="#">Secretaire</a></li>
+                                  <li><a class="dropdown-item" href="#">Agent Communicateur</a></li>
+                                </ul>
+                              </div>
+                            <input type="text" name="recherche" id="recherche" placeholder="rechercher">
                         </div>
+                        <div class="imprime">
+                            <button class="btn btn-secondary">Pdf</button>
+                            <button class="btn btn-secondary">Excel</button>
+                        </div>
+                        <a class="ajout btn btn-primary" href="../../../Formulaires/ajoutperso.php">+ajouter un personnel</a>
+                    </div>
                     <div class="bat">
-                        <div class="table_scroll table-responsives">
+                        <div class="table_scroll table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>
-                                    <tr class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    <tr>
                                         <th>No.</th>
+                                        <th>Role</th>
                                         <th>Nom</th>
-                                        <th>Prenom</th>
-                                        <th>Genre</th>
-                                        <th>Date de naissance</th>
-                                        <th>Date de debut</th>
-                                        <th>Téléphone</th>
-                                        <th>Travail</th>
+                                        <th>Prenoms</th>
+                                        <th>Photo</th>
+                                        <th>Numero</th>
+                                        <th>Niveau</th>
+                                        <th>E-mail</th>
+                                        <th>Occupation</th>
+                                        <th>Salaire</th>
                                         <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php
+                                        $sql = "SELECT * FROM personnel;";
+                                        $result = mysqli_query($link, $sql);
+                                        $resultCheck = mysqli_num_rows($result);
+                                        if($resultCheck > 0)
+                                        {
+                                            while($row = mysqli_fetch_assoc($result))
+                                            {
+                                        ?>  
                                     <tr>
-                                        <td>1</td>
-                                        <td >ROGER</td>
-                                        <td>Benoit</td>
-                                        <td>M</td>
-                                        <td>01-01-2005</td>
-                                        <td>01-01-2017</td>
-                                        <td>90-29-28-83</td>
-                                        <td>secrétaire</td>
+                                        <td><?php echo $row['id'];?></td>
+                                        <td><?php echo $row['nom'];?></td>                                      
+                                        <td><?php echo $row['prenom'];?></td>
+                                        <td><img src="image/<?php echo $row['photo'];?>" width= 90 alt=""></td>
+                                        <td><?php echo $row['tel'];?></td>
+                                        <td><?php echo $row['niveau'];?></td>
+                                        <td><?php echo $row['mail'];?></td>
+                                        <td><?php echo $row['occupation'];?></td>
+                                        <td><?php echo $row['salaire'];?></td>
                                         <td class="action">
-                                            <a  class="btn btn-success icon" href="../../../Formulaires\infoperso.php"><ion-icon name="eye-outline"></ion-icon></a>
-                                            <a  class="btn btn-warning icon" href="../../../Formulaires\ajoutperso.php"><ion-icon name="create-outline"></ion-icon></a>
-                                            <button  class="btn btn-danger icon"><ion-icon name="trash-outline"></ion-icon></button>
+                                            <a  class="btn btn-success icon" href="../../../Formulaires\editepers.php?edit=<?php echo $row['id'];?>"><ion-icon name="eye-outline"></ion-icon></a>
+                                            <a  class="btn btn-danger icon" href="../../../Formulaires\deletepers.php?delete=<?php echo $row['id'];?>"><ion-icon name="trash-outline"></ion-icon></a>
                                         </td>
-                                    </tr>  
+                                        <td><a class="btn btn-primary etat">Consulter</a></td>
+                                    </tr>
+                                    <?php  
+                                    }
+                                 }
+                                 ?>     
                                 </tbody>
                             </table>
                         </div>
@@ -98,5 +129,5 @@
     <script  type = "module"  src = "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" > </script> 
     <script  nomodule  src = "https://unpkg .com/ionicons@5.5.2/dist/ionicons/ionicons.js" > </script>
     <script src="../../../boost\js\bootstrap.bundle.min.js"></script>
-</body>
+ </body>
 </html>
