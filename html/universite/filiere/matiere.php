@@ -2,7 +2,6 @@
     include("../../../connexion.php");
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,23 +68,36 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Nom</th>
-                                        <th>Enseignant</th>
+                                        <th>Nombre de crédits</th>
                                         <th>filière</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php   
+                                        $sql = "SELECT * FROM school_matiere;";
+                                        $result = mysqli_query($link, $sql);
+                                        $resultCheck = mysqli_num_rows($result);
+                                        if($resultCheck > 0)
+                                        {
+                                            while($row = mysqli_fetch_assoc($result))
+                                            {
+                                      
+                                     ?>      
                                     <tr>
-                                        <td>1</td> 
-                                        <td>Alogorithme</td>
-                                        <td>MAMADOU</td>
-                                        <td>IRT1</td>
+                                        <td><?php echo $row['idmatiere'];?></td> 
+                                        <td><?php echo $row['nomMatiere'];?></td>
+                                        <td><?php echo $row['nbrecreditMatiere'];?></td>
+                                        <td><?php echo $row['filiereMatiere'];?></td>
                                         <td>
-                                            <a  class="btn btn-success icon" href="../../../Formulaires\infomat.php"><ion-icon name="eye-outline"></ion-icon></a>
-                                            <a  class="btn btn-warning icon" href="../../../Formulaires\ajoutmat.php"><ion-icon name="create-outline"></ion-icon></a>
-                                            <button  class="btn btn-danger icon"><ion-icon name="trash-outline"></ion-icon></button>
+                                        <a  class="btn btn-success icon" href="../../../Formulaires\editmat.php?edit=<?php echo $row['idmatiere'];?>"><ion-icon name="eye-outline"></ion-icon></a>
+                                            <a  class="btn btn-danger icon" href="../../../Formulaires\deletemat.php?delete=<?php echo $row['idmatiere'];?>"><ion-icon name="trash-outline"></ion-icon></a>
                                         </td>
-                                    </tr>>
+                                    </tr>
+                                    <?php  
+                                       }
+                                    }
+                                    ?>     
                                 </tbody>
                             </table>
                         </div>
