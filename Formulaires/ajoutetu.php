@@ -9,6 +9,67 @@
            session_destroy();
             header("Location: index.php");
         }
+    
+    if(isset($_POST["valider"]))
+        {
+            $nometu = $_POST["nomEtudiant"];
+            $prenom = $_POST["prenomEtudiant"];
+            $genre = $_POST["genreEtudiant"];
+            $datenaiss = date('y-m-d' , strtotime($_POST["datenais"]));
+            $emailetu = $_POST["emailEtudiant"];
+            $teletu = $_POST["numeroEtudiant"];
+            $fil = $_POST["filEtudiant"];
+            $statut = $_POST["studentStatus"];
+
+            $_SESSION['message'] = "Etudiant inscrit avec succès";
+            $_SESSION['msg_type'] = "succès";
+
+            if($_FILES["photoEtudiant"]["error"] === 3){
+                echo "<script> alert('Image n'existe pas'); </script>";
+            } else {
+                $fileName = $_FILES["photoEtudiant"]["name"];
+                $fileSize = $_FILES["photoEtudiant"]["size"];
+                $tmpName = $_FILES["photoEtudiant"]["tmp_name"];
+
+                $validImageExtension = ['jpg', 'jpeg', 'png'];
+                $imageExtension = explode('.', $fileName);
+                $imageExtension = strtolower(end($imageExtension));
+                if(!in_array($imageExtension, $validImageExtension)){
+                    echo "<script> alert('Extension d'image invalide'); </script>";
+                } else if($fileSize > 1000000) {
+                    echo "<script> alert('Taille de l'image trop grande'); </script>";
+                }
+                else 
+                {
+                    $newImageName = uniqid();
+                    $newImageName .= '.' . $imageExtension;
+
+                    move_uploaded_file($tmpName, '../image/' . $newImageName);
+                    
+                    $query = "INSERT INTO student  VALUES('', '$newImageName', '$nometu ', '$prenom', '$genre', '$datenaiss', '$emailetu', '$teletu', '$fil', '$statut', '', '', '')";
+
+                       mysqli_query($link, $query);
+
+                       echo "<script> alert('Etudiant inscrit avec succès') </script>";
+
+                       $_SESSION['message'] = "Etudiant inscrit avec succès";
+                       $_SESSION['msg_type'] = "succès";
+
+                    
+                    header("Location: ../html/universite/etudiant/etudiant.php");
+                }
+            }
+            
+         } else {
+            echo '<script> 
+                    swal({
+                    title: "Matiere créé!",
+                    text: "Felicitations!",
+                    icon: "success",
+                }); 
+                </script>';
+         }   
+      
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,69 +116,6 @@
                         <a class="a" id="primes"href="#"><li></li></a>
                     </ul>
                 </div>
-                            <?php
-                                $mysql_host = 'localhost';
-                                $mysql_user = 'root';
-                                $mysql_password = '';
-                                
-                            
-                                $link = mysqli_connect($mysql_host, $mysql_user, $mysql_password, 'eschools') or
-                                    die('Utilisateur ne peut pas se connecter a la base de données! Essayer encore.....');
-                                
-                                if(isset($_POST["valider"]))
-                                {
-                                    $nometu = $_POST["nomEtudiant"];
-                                    $prenom = $_POST["prenomEtudiant"];
-                                    $genre = $_POST["genreEtudiant"];
-                                    $datenaiss = date('y-m-d' , strtotime($_POST["datenais"]));
-                                    $emailetu = $_POST["emailEtudiant"];
-                                    $teletu = $_POST["numeroEtudiant"];
-                                    $fil = $_POST["filEtudiant"];
-                                    $statut = $_POST["studentStatus"];
-
-                                    $_SESSION['message'] = "Etudiant inscrit avec succès";
-                                    $_SESSION['msg_type'] = "succès";
-
-                                    if($_FILES["photoEtudiant"]["error"] === 3){
-                                        echo "<script> alert('Image n'existe pas'); </script>";
-                                    } else {
-                                        $fileName = $_FILES["photoEtudiant"]["name"];
-                                        $fileSize = $_FILES["photoEtudiant"]["size"];
-                                        $tmpName = $_FILES["photoEtudiant"]["tmp_name"];
-
-                                        $validImageExtension = ['jpg', 'jpeg', 'png'];
-                                        $imageExtension = explode('.', $fileName);
-                                        $imageExtension = strtolower(end($imageExtension));
-                                        if(!in_array($imageExtension, $validImageExtension)){
-                                            echo "<script> alert('Extension d'image invalide'); </script>";
-                                        } else if($fileSize > 1000000) {
-                                            echo "<script> alert('Taille de l'image trop grande'); </script>";
-                                        }
-                                        else 
-                                        {
-                                            $newImageName = uniqid();
-                                            $newImageName .= '.' . $imageExtension;
-
-                                            move_uploaded_file($tmpName, '../image/' . $newImageName);
-                                            
-                                            $query = "INSERT INTO student  VALUES('', '$newImageName', '$nometu ', '$prenom', '$genre', '$datenaiss', '$emailetu', '$teletu', '$fil', '$statut', '', '', '')";
-
-                                               mysqli_query($link, $query);
-
-                                               echo "<script> alert('Etudiant inscrit avec succès') </script>";
-
-                                               $_SESSION['message'] = "Etudiant inscrit avec succès";
-                                               $_SESSION['msg_type'] = "succès";
-
-                                            
-                                            header("Location: ../html/universite/etudiant/etudiant.php");
-                                        }
-                                    }
-                                    
-                                 } else {
-                                    echo "<script> alert('Ajout impossible') </script>";
-                                 }   
-                            ?>
                 <div class="conteneurH">
                     <div class="bats">
                             <div class="form_container">
