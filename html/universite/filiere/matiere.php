@@ -85,13 +85,13 @@
                                       
                                      ?>      
                                     <tr>
-                                        <td><?php echo $row['idmatiere'];?></td> 
-                                        <td><?php echo $row['nomMatiere'];?></td>
-                                        <td><?php echo $row['nbrecreditMatiere'];?></td>
-                                        <td><?php echo $row['filiereMatiere'];?></td>
+                                        <td><?= $row['idmatiere'];?></td> 
+                                        <td><?= $row['nomMatiere'];?></td>
+                                        <td><?= $row['nbrecreditMatiere'];?></td>
+                                        <td><?= $row['filiereMatiere'];?></td>
                                         <td>
-                                        <a  class="btn btn-success icon" href="../../../Formulaires\editmat.php?edit=<?php echo $row['idmatiere'];?>"><ion-icon name="eye-outline"></ion-icon></a>
-                                            <a  class="btn btn-danger icon" href="../../../Formulaires\deletemat.php?delete=<?php echo $row['idmatiere'];?>"><ion-icon name="trash-outline"></ion-icon></a>
+                                            <a  class="btn btn-success icon" href="../../../Formulaires\editmat.php?edit=<?= $row['idmatiere'];?>">Edit<ion-icon name="eye-outline"></ion-icon></a>
+                                            <a  class="btn btn-danger icon" href="../../../Formulaires\deletemat.php?delete=<?= $row['idmatiere'];?>">Delete<ion-icon name="trash-outline"></ion-icon></a>
                                         </td>
                                     </tr>
                                     <?php  
@@ -108,5 +108,17 @@
     <script  type = "module"  src = "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" > </script> 
     <script  nomodule  src = "https://unpkg .com/ionicons@5.5.2/dist/ionicons/ionicons.js" > </script>
     <script src="../../../boost\js\bootstrap.bundle.min.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script>
+        $('#identif').on('click', function(){
+
+            Swal.fire({
+                type: 'success',
+                title: 'Your Title!',
+                text: 'Your Text',
+            })
+        })
+    </script>
 </body>
 </html>

@@ -187,5 +187,18 @@
             var polis5=document.getElementById('poli5');
             verifier(mbps,polis1,polis2,polis3,polis4,polis5);
             });
+
+            <script src="jquery-3.4.1.min.js"></script>
+            <script src="sweetalert2.all.min.js"></script>
+            <script>
+                $('#identif').on('click', function(){
+
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Your Title!',
+                        text: 'Your Text',
+                    })
+                })
+            </script>
     </script>
   </body>  

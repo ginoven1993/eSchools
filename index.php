@@ -40,6 +40,7 @@
         </div>
         <div id="formulaire">
             <div id="deco"></div>
+
             <form id="formu" action="index.php" method="post">
                <div class="entrer">
                    <input type="text" name="username"  id="nom"  placeholder="Nom d'utilisateur" required="">
@@ -48,10 +49,24 @@
                     <input type="text" name="motdepasse"  id="mot_de_passe"  placeholder="Mot de passe" required="">
                  </div>  
                 <div class="entrer">
-                    <button id="annule" href="#">ANNULER</ion-icon></button>
-                    <button id="identif" name="identifier" type="submit">S'IDENTIFIER</ion-icon></button>
+                    <button id="annule" href="#">ANNULER</button>
+                    <button id="identif" name="identifier" type="submit">S'IDENTIFIER</button>
                 </div>
             </form>
+
         </div>
-    </div>
+    </div>    
+
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script>
+        $('#identif').on('click', function(){
+
+            Swal.fire({
+                type: 'success',
+                title: 'Your Title!',
+                text: 'Your Text',
+            })
+        })
+    </script>
     </body>

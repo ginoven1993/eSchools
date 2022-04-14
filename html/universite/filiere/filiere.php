@@ -74,6 +74,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php foreach ($filieres as $filiere):?>
+                                        <tr>
+                                            <td><?= $filiere['idfiliere'] ?></td>
+                                            <td><?= $filiere['Nomfiliere'] ?></td>
+                                            <td><?= $filiere['Codefiliere'] ?></td>
+                                            <td><?= $filiere['nombre_etudiants'] ?></td>
+                                            <td><?= $filiere['nombre_matieres'] ?></td>
+                                            <td><?= $filiere['salle_de_cours'] ?></td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                </tbody>
+
+
+
+                                <tbody>
                                 <?php   
                                         $sql = "SELECT * FROM school_filiere;";
                                         $result = mysqli_query($link, $sql);
@@ -85,15 +100,15 @@
                                       
                                      ?>      
                                         <tr>
-                                            <td><?php echo $row['idfiliere'];?></td> 
-                                            <td><?php echo $row['Nomfiliere'];?></td> 
-                                            <td><?php echo $row['Codefiliere'];?></td>
-                                            <td><?php echo $row['nombre_etudiants'];?></td>
-                                            <td><?php echo $row['nombre_matieres'];?></td>
-                                            <td><?php echo $row['salle_de_cours'];?></td> 
+                                            <td><?= $row['idfiliere'];?></td> 
+                                            <td><?= $row['Nomfiliere'];?></td> 
+                                            <td><?= $row['Codefiliere'];?></td>
+                                            <td><?= $row['nombre_etudiants'];?></td>
+                                            <td><?= $row['nombre_matieres'];?></td>
+                                            <td><?= $row['salle_de_cours'];?></td> 
                                             <td>
-                                            <a  class="btn btn-success icon" href="../../../Formulaires\editfil.php?edit=<?php echo $row['idfiliere'];?>"><ion-icon name="eye-outline"></ion-icon></a>
-                                            <a  class="btn btn-danger icon" href="../../../Formulaires\deletefil.php?delete=<?php echo $row['idfiliere'];?>"><ion-icon name="trash-outline"></ion-icon></a>
+                                                <a  class="btn btn-success icon" href="../../../Formulaires\editfil.php?edit=<?= $row['idfiliere'];?>">Edit<ion-icon name="eye-outline"></ion-icon></a>
+                                                <a  class="btn btn-danger icon" href="../../../Formulaires\deletefil.php?delete=<?= $row['idfiliere'];?>">Delete<ion-icon name="trash-outline"></ion-icon></a>
                                             
                                             </td>        
                                     <?php  
@@ -110,5 +125,30 @@
     <script  type = "module"  src = "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" > </script> 
     <script  nomodule  src = "https://unpkg .com/ionicons@5.5.2/dist/ionicons/ionicons.js" > </script>
     <script src="../../../boost\js\bootstrap.bundle.min.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script>
+        $('#identif').on('click', function(){
+
+            Swal.fire({
+                type: 'success',
+                title: 'Your Title!',
+                text: 'Your Text',
+            })
+        })
+    </script>
 </body>
 </html>
+
+<!-- @section('js')
+    <script>
+        $(document).ready(function(){
+            $('#myTable').DataTable({
+                dom : 'Bfrtip',
+                buttons : [
+                    'copy','excel','csv','pdf','print','colvis'
+                ]
+            });
+        });
+    </script>
+@endsection -->
