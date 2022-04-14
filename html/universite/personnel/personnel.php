@@ -1,5 +1,7 @@
 <?php
     include("../../../connexion.php");
+    session_start();
+    $username = $_SESSION["username"];
 ?>
 
 <html lang="en">
@@ -28,16 +30,34 @@
                     <ion-icon name="person-outline"></ion-icon>
                 </div>
                 <div class="identifiant">
-                    <p>MAMADOU Aniss<br>administrateur</p>
+                    <p><?php echo $username;?><br>ADMIN</p>
                 </div>
-                <div><button class="deconnexion">Deconnecter</buttom></div>
+                <div class="solus">
+                      <?php 
+                             $mysql_host = 'localhost';
+                             $mysql_user = 'root';
+                             $mysql_password = '';   
+                         
+                             $link = mysqli_connect($mysql_host, $mysql_user, $mysql_password, 'eschools') or
+                                 die('Utilisateur ne peut pas se connecter a la base de données! Essayer encore.....');
+                            if(isset($_POST["logout"]))
+                            {
+                                session_start();
+                                session_destroy();
+                                header("Location: index.php");
+                            }
+                     ?>
+                    <a href="../../../index.php"><button class="deconnexion" type="submit" name="logout">Deconnecter</button></a>
+                </div>
             </div>
-            <ul class="navigationVerticale">
-                <a class="a" href="..\compta\compta.php"><li>Tableau de bord</li></a>
-                <a class="a" id="prime" href="#"><li>Etudiants</li></a>
-                <a class="a" href="../filiere/filiere.php"><li>Filières</li></a>
-                <a class="a" href="../personnel/personnel.php"><li>Personnels</li></a>
-            </ul>
+            <div class="navverti">
+                    <ul class="navigationVerticale">
+                        <a class="a" href="..\compta\compta.php"><li>Tableau de bord</li></a>
+                        <a class="a" href="../etudiant/etudiant.php"><li>Etudiants</li></a>
+                        <a class="a" href="../filiere/filiere.php"><li>Filières</li></a>
+                        <a class="a" id="prime" href="#"><li>Personnels</li></a>
+                    </ul>
+            </div>
         </div>
         <div class="horizontale">
                 <div class="navigationHaut">
@@ -76,42 +96,44 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
+                                        <th>Photo</th>
                                         <th>Role</th>
                                         <th>Nom</th>
                                         <th>Prenoms</th>
-                                        <th>Photo</th>
                                         <th>Numero</th>
                                         <th>Niveau</th>
                                         <th>E-mail</th>
                                         <th>Occupation</th>
+                                        <th>Date Embauche</th>
                                         <th>Salaire</th>
                                         <th>Action</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $sql = "SELECT * FROM personnel;";
+                                        $sql = "SELECT * FROM personelboard;";
                                         $result = mysqli_query($link, $sql);
-                                        $resultCheck = mysqli_num_rows($result);
-                                        if($resultCheck > 0)
+                                       
+                                        if($result)
                                         {
                                             while($row = mysqli_fetch_assoc($result))
                                             {
                                         ?>  
                                     <tr>
-                                        <td><?php echo $row['id'];?></td>
-                                        <td><?php echo $row['nom'];?></td>                                      
-                                        <td><?php echo $row['prenom'];?></td>
-                                        <td><img src="image/<?php echo $row['photo'];?>" width= 90 alt=""></td>
-                                        <td><?php echo $row['tel'];?></td>
-                                        <td><?php echo $row['niveau'];?></td>
-                                        <td><?php echo $row['mail'];?></td>
-                                        <td><?php echo $row['occupation'];?></td>
-                                        <td><?php echo $row['salaire'];?></td>
+                                        <td><?php echo $row['idPersonelBoard'];?></td>
+                                        <td><img src="image/<?php echo $row['photoPersonel'];?>" width= 90 alt=""></td>
+                                        <td><?php echo $row['personelRole'];?></td>    
+                                        <td><?php echo $row['nomPersonel'];?></td>                                      
+                                        <td><?php echo $row['prenomPersonel'];?></td>
+                                        <td><?php echo $row['numeroPersonel'];?></td>
+                                        <td><?php echo $row['niveauPersonel'];?></td>
+                                        <td><?php echo $row['emailPersonel'];?></td>
+                                        <td><?php echo $row['OccupationPersonel'];?></td>
+                                        <td><?php echo $row['salairePersonel'];?></td>
+                                        <td><?php echo $row['dateArriveePersonel'];?></td>
                                         <td class="action">
-                                            <a  class="btn btn-success icon" href="../../../Formulaires\editepers.php?edit=<?php echo $row['id'];?>"><ion-icon name="eye-outline"></ion-icon></a>
-                                            <a  class="btn btn-danger icon" href="../../../Formulaires\deletepers.php?delete=<?php echo $row['id'];?>"><ion-icon name="trash-outline"></ion-icon></a>
+                                            <a  class="btn btn-success icon" href="../../../Formulaires\editepers.php?edit=<?php echo $row['idPersonelBoard'];?>"><ion-icon name="eye-outline"></ion-icon></a>
+                                            <a  class="btn btn-danger icon" href="../../../Formulaires\deletepers.php?delete=<?php echo $row['idPersonelBoard'];?>"><ion-icon name="trash-outline"></ion-icon></a>
                                         </td>
                                         <td><a class="btn btn-primary etat">Consulter</a></td>
                                     </tr>

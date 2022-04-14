@@ -29,16 +29,34 @@
                     <ion-icon name="person-outline"></ion-icon>
                 </div>
                 <div class="identifiant">
-                    <p><?php echo $username;?><br>administrateur</p>
+                    <p><?php echo $username;?><br>Admin</p>
                 </div>
-                <div><button class="deconnexion">Deconnecter</button></div>
+                <div class="solus">
+                      <?php 
+                             $mysql_host = 'localhost';
+                             $mysql_user = 'root';
+                             $mysql_password = '';   
+                         
+                             $link = mysqli_connect($mysql_host, $mysql_user, $mysql_password, 'eschools') or
+                                 die('Utilisateur ne peut pas se connecter a la base de données! Essayer encore.....');
+                            if(isset($_POST["logout"]))
+                            {
+                                session_start();
+                                session_destroy();
+                                header("Location: index.php");
+                            }
+                     ?>
+                    <a href="../../../index.php"><button class="deconnexion" type="submit" name="logout">Deconnecter</button></a>
+                </div>
             </div>
-            <ul class="navigationVerticale">
+           <div class="navverti">
+           <ul class="navigationVerticale">
                 <a class="a" href="..\compta\compta.php"><li>Tableau de bord</li></a>
                 <a class="a" href="..\etudiant\etudiant.php"><li>Etudiants</li></a>
                 <a class="a" id="prime" href="..\filiere\filiere.php"><li>Filières</li></a>
-                <a class="a" href="..\personnel\personel.php"><li>Personnels</li></a>
+                <a class="a" href="..\personnel\personnel.php"><li>Personnels</li></a>
             </ul>
+           </div>
         </div>
         <div class="horizontale">
                 <div class="navigationHaut">

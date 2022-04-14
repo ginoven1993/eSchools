@@ -24,9 +24,15 @@
                 <div class="identifiant">
                 <p><?php echo $username;?><br>administrateur</p>
                 </div>
-                <div>
+                <div class="solus">
                       <?php 
+                             $mysql_host = 'localhost';
+                             $mysql_user = 'root';
+                             $mysql_password = '';
                             
+                         
+                             $link = mysqli_connect($mysql_host, $mysql_user, $mysql_password, 'eschools') or
+                                 die('Utilisateur ne peut pas se connecter a la base de données! Essayer encore.....');
                             if(isset($_POST["logout"]))
                             {
                                 session_start();
@@ -34,15 +40,17 @@
                                 header("Location: index.php");
                             }
                      ?>
-                    <button class="deconnexion" type="submit" name="logout">Deconnecter</button>
+                    <a href="../../../index.php"><button class="deconnexion" type="submit" name="logout">Deconnecter</button></a>
                 </div>
             </div>
+            <div class="navverti">
             <ul class="navigationVerticale">
                 <a class="a" id="prime" href="#"><li>Tableau de bord</li></a>
                 <a class="a" href="..\etudiant\etudiant.php"><li>Etudiants</li></a>
                 <a class="a" href="..\filiere\filiere.php"><li>Filières</li></a>
                 <a class="a" href="..\personnel\personnel.php"><li>Personnels</li></a>
             </ul>
+            </div>
         </div>
         <div class="horizontale">
                 <div class="conteneurH">
